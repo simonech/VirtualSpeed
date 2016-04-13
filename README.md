@@ -9,7 +9,7 @@ The standard calculation done by [TrainerRoad][b4825a53] is to multiply the cade
 
 The following image shows how the TCX from TrainerRoad is rendered on [TrainingPeaks](http://trainingpeaks.com). Notice how speed (green) follows cadence (yellow).
 
-![Speed and cadence](images\before.PNG)
+![Speed and cadence](images/before.PNG)
 
 ## Solution
 
@@ -17,7 +17,7 @@ A better way of estimating speed is by using physics. Speed depends on the power
 
 It's still an estimation as we'll never know for sure the coefficient of drag of our bike and body position, nor we'll know the rolling resistance of a certain stretch of road, but at least the speed will be a function of Power, not of cadence (see the following picture, where speed in green follows power in purple).
 
-![Speed and power](images\After Processing.PNG)
+![Speed and power](images/After Processing.PNG)
 
 ## What the application does
 
