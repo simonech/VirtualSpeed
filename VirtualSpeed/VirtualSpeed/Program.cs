@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
 
 namespace VirtualSpeed
 {
@@ -13,10 +14,18 @@ namespace VirtualSpeed
         
         static void Main(string[] args)
         {
+            // abort execution if filename is missing
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Error : tcx file name is missing !");
+                return;
+            }
+
+            string filename = args[0];
             var calc = new VirtualSpeedCalculator();
 
             XmlDocument myXmlDocument = new XmlDocument();
-            myXmlDocument.Load("powerData.tcx");
+            myXmlDocument.Load(filename);
 
             XmlNode trainingNode;
             trainingNode = myXmlDocument.DocumentElement;
@@ -106,7 +115,7 @@ namespace VirtualSpeed
 
                         }
                     }
-            myXmlDocument.Save("Fixed.tcx");
+            myXmlDocument.Save(Path.GetFileNameWithoutExtension(filename) + "_fixed.tcx");
 
         }
 
