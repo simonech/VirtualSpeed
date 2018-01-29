@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.IO;
 
 namespace VirtualSpeed
 {
@@ -13,10 +14,28 @@ namespace VirtualSpeed
         
         static void Main(string[] args)
         {
+            // abort execution if filename is missing
+            if (args.Length == 0)
+            {
+                Console.WriteLine("Error : tcx file name is missing !");
+                return;
+            }
+
+            string filename = args[0];
             var calc = new VirtualSpeedCalculator();
 
             XmlDocument myXmlDocument = new XmlDocument();
-            myXmlDocument.Load("powerData.tcx");
+
+            // try to open the xml file and abort if any exception is raised
+            try
+            {
+                myXmlDocument.Load(filename);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error while loading xml file : " + e.Message);
+                return;
+            }
 
             XmlNode trainingNode;
             trainingNode = myXmlDocument.DocumentElement;
@@ -84,7 +103,23 @@ namespace VirtualSpeed
                                             }
                                         }
 
-                                        var newSpeed = calc.CalculateVelocity(Double.Parse(watt.InnerText));
+                                        double newSpeed = 0.0;
+
+                                        // check if watt information is missing
+                                        if (watt == null)
+                                        {
+                                            // if speed node is present then keep the raw speed without adjusting it
+                                            if (speed != null)
+                                            {
+                                                // speed in tcx is in m/s
+                                                newSpeed = Double.Parse(speed.InnerText, CultureInfo.InvariantCulture) * 3600 / 1000;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            newSpeed = calc.CalculateVelocity(Double.Parse(watt.InnerText));
+                                        }
+
                                         var newSpeedMS = calc.ConvertKmhToMS(newSpeed);
                                         lapMaxSpeed = Math.Max(lapMaxSpeed, newSpeedMS);
 
@@ -92,8 +127,13 @@ namespace VirtualSpeed
                                         cumulatedDistance = cumulatedDistance + pointDistance;
                                         lapCumulativeDistance = lapCumulativeDistance + pointDistance;
 
-                                        distance.InnerText = cumulatedDistance.ToString(new CultureInfo("en-US"));
-                                        speed.InnerText = newSpeedMS.ToString(new CultureInfo("en-US"));
+                                        // DistanceMeters node might not be present in a Trackpoint node, don't try to replace it if so
+                                        if (distance != null)
+                                            distance.InnerText = cumulatedDistance.ToString(new CultureInfo("en-US"));
+
+                                        // speed node might not be present in an Extension node, don't try to replace it if so
+                                        if (speed != null)
+                                            speed.InnerText = newSpeedMS.ToString(new CultureInfo("en-US"));
                                     }
                             }
 
@@ -106,7 +146,7 @@ namespace VirtualSpeed
 
                         }
                     }
-            myXmlDocument.Save("Fixed.tcx");
+            myXmlDocument.Save(Path.GetFileNameWithoutExtension(filename) + "_fixed.tcx");
 
         }
 
