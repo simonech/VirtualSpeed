@@ -25,7 +25,17 @@ namespace VirtualSpeed
             var calc = new VirtualSpeedCalculator();
 
             XmlDocument myXmlDocument = new XmlDocument();
-            myXmlDocument.Load(filename);
+
+            // try to open the xml file and abort if any exception is raised
+            try
+            {
+                myXmlDocument.Load(filename);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Error while loading xml file : " + e.Message);
+                return;
+            }
 
             XmlNode trainingNode;
             trainingNode = myXmlDocument.DocumentElement;
