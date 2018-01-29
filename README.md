@@ -17,11 +17,14 @@ A better way of estimating speed is by using physics. Speed depends on the power
 
 It's still an estimation as we'll never know for sure the coefficient of drag of our bike and body position, nor we'll know the rolling resistance of a certain stretch of road, but at least the speed will be a function of Power, not of cadence (see the following picture, where speed in green follows power in purple).
 
-![Speed and power](images/After Processing.PNG)
+![Speed and power](images/After%20Processing.PNG)
 
 ## What the application does
 
-The application does nothing more than taking the TCX you can download from TrainerRoad, and updates all speed and distance values using the new estimation. (At the moment parameters are fixed and file name is fixed too, but I'll make it configurable soon)
+The application does nothing more than taking the TCX you can download from TrainerRoad, and updates all speed and distance values using the new estimation. 
+
+At the moment parameters are fixed.
+The file name must be given as a parameter when calling VirtualSpeed.exe
 
   [b4825a53]: www.trainerroad.com "TrainerRoad"
   [ba6fa317]: http://www.gribble.org/cycling/power_v_speed.html "The computational cyclist"
