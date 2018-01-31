@@ -22,7 +22,14 @@ namespace VirtualSpeed
             }
 
             string filename = args[0];
-            var calc = new VirtualSpeedCalculator();
+
+            VirtualSpeedCalculator calc;
+
+            // check if a second argument is given (parameters file name)
+            if (args.Length > 1)
+                calc = new VirtualSpeedCalculator(args[1]);
+            else
+                calc = new VirtualSpeedCalculator();
 
             calc.Parameters.PrintParameters();
 

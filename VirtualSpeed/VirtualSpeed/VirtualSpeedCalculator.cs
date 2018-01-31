@@ -13,9 +13,9 @@ namespace VirtualSpeed
     {
         private const double G = 9.8067;
 
-        public VirtualSpeedCalculator(): this("parameters.xml")
+        public VirtualSpeedCalculator()
         {
-
+            Parameters = new Parameters();
         }
 
         public VirtualSpeedCalculator(String parametersFile)
