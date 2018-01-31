@@ -23,6 +23,13 @@ namespace VirtualSpeed
 
             string filename = args[0];
 
+            // abort if file to fix is not a tcx
+            if (Path.GetExtension(filename) != ".tcx")
+            {
+                Console.WriteLine("Error : input file is not a tcx");
+                return;
+            }
+
             VirtualSpeedCalculator calc;
 
             // check if a second argument is given (parameters file name)
