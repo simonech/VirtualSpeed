@@ -23,8 +23,13 @@ It's still an estimation as we'll never know for sure the coefficient of drag of
 
 The application does nothing more than taking the TCX you can download from TrainerRoad, and updates all speed and distance values using the new estimation. 
 
-At the moment parameters are fixed.
-The file name must be given as a parameter when calling VirtualSpeed.exe
+## Launching the application
 
-  [b4825a53]: www.trainerroad.com "TrainerRoad"
+The application takes one mandatory argument : the file to fix.
+
+Another optional argument can be used : an xml file containing the physics model parameters. If the file is not specified then the default parameters are used.
+An example file is given to show the syntax.
+Not all parameters need to be set : if one is missing then the default value is used.
+
+  [b4825a53]: http://www.trainerroad.com "TrainerRoad"
   [ba6fa317]: http://www.gribble.org/cycling/power_v_speed.html "The computational cyclist"

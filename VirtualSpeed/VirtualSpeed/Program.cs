@@ -22,7 +22,23 @@ namespace VirtualSpeed
             }
 
             string filename = args[0];
-            var calc = new VirtualSpeedCalculator();
+
+            // abort if file to fix is not a tcx
+            if (Path.GetExtension(filename) != ".tcx")
+            {
+                Console.WriteLine("Error : input file is not a tcx");
+                return;
+            }
+
+            VirtualSpeedCalculator calc;
+
+            // check if a second argument is given (parameters file name)
+            if (args.Length > 1)
+                calc = new VirtualSpeedCalculator(args[1]);
+            else
+                calc = new VirtualSpeedCalculator();
+
+            calc.Parameters.PrintParameters();
 
             XmlDocument myXmlDocument = new XmlDocument();
 

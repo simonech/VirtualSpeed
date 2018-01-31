@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Globalization;
 
 namespace VirtualSpeed
 {
@@ -11,14 +13,77 @@ namespace VirtualSpeed
     {
         private const double G = 9.8067;
 
-        public VirtualSpeedCalculator(): this(new Parameters())
+        public VirtualSpeedCalculator()
         {
-
+            Parameters = new Parameters();
         }
 
-        public VirtualSpeedCalculator(Parameters parameters)
+        public VirtualSpeedCalculator(String parametersFile)
         {
-            Parameters = parameters;
+            Parameters = new Parameters();
+
+            XmlDocument xmlParameters = new XmlDocument();
+
+            try
+            {
+                xmlParameters.Load(parametersFile);
+            }
+            // use default parameters if the xml load fails
+            catch (Exception e)
+            {
+                Console.WriteLine("Error while loading parameters, default values are used.");
+                return;
+            }
+
+            XmlNode parametersNode = xmlParameters.DocumentElement;
+
+            //go through each node of the file to override the corresponding parameter
+            foreach (XmlNode parameter in parametersNode)
+            {
+                Double paramValue;
+                try
+                {
+                    paramValue = Double.Parse(parameter.InnerText, CultureInfo.InvariantCulture);
+
+                    switch (parameter.Name)
+                    {
+                        case "WeightRider":
+                            Parameters.WeightRider = paramValue;
+                            break;
+                        case "DriveTrainLoss":
+                            Parameters.DriveTrainLoss = paramValue;
+                            break;
+                        case "WeightBike":
+                            Parameters.WeightBike = paramValue;
+                            break;
+                        case "ClimbGrade":
+                            Parameters.ClimbGrade = paramValue;
+                            break;
+                        case "Crr":
+                            Parameters.Crr = paramValue;
+                            break;
+                        case "A":
+                            Parameters.A = paramValue;
+                            break;
+                        case "Cd":
+                            Parameters.Cd = paramValue;
+                            break;
+                        case "Rho":
+                            Parameters.Rho = paramValue;
+                            break;
+                        case "CdA":
+                            Parameters.CdA = paramValue;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                // stay on the default value if the value couldn't be parsed
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error while reading " + parameter.Name +  " parameter, default value is used.");
+                }
+            }
         }
 
         public Parameters Parameters { get; set; }
@@ -128,6 +193,22 @@ namespace VirtualSpeed
         {
             if (CdA == 0) return Cd * A;
             return CdA;
+        }
+
+        public void PrintParameters()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Parameters used : ");
+            Console.WriteLine("");
+            Console.WriteLine("\t- DriveTrainLoss : {0:F3}", DriveTrainLoss);
+            Console.WriteLine("\t- WeightRider : {0:F1}", WeightRider);
+            Console.WriteLine("\t- WeightBike : {0:F1}", WeightBike);
+            Console.WriteLine("\t- ClimbGrade : {0:F1}", ClimbGrade);
+            Console.WriteLine("\t- Crr : {0:F3}", Crr);
+            Console.WriteLine("\t- A : {0:F3}", A);
+            Console.WriteLine("\t- Cd : {0:F3}", Cd);
+            Console.WriteLine("\t- Rho : {0:F3}", Rho);
+            Console.WriteLine("\t- CdA : {0:F3}", CdA);
         }
     }
 

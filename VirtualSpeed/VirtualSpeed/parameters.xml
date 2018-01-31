@@ -1,0 +1,11 @@
+<Parameters>
+    <DriveTrainLoss>3</DriveTrainLoss>
+    <WeightRider>70</WeightRider>
+    <WeightBike>8</WeightBike>
+    <ClimbGrade>0</ClimbGrade>
+    <Crr>0.005</Crr>
+    <A>0.509</A>
+    <Cd>0.63</Cd>
+    <Rho>1.226</Rho>
+    <CdA>0</CdA>
+</Parameters>
