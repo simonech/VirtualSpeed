@@ -24,6 +24,8 @@ namespace VirtualSpeed
             string filename = args[0];
             var calc = new VirtualSpeedCalculator();
 
+            calc.Parameters.PrintParameters();
+
             XmlDocument myXmlDocument = new XmlDocument();
 
             // try to open the xml file and abort if any exception is raised
