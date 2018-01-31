@@ -31,5 +31,5 @@ Another optional argument can be used : an xml file containing the physics model
 An example file is given to show the syntax.
 Not all parameters need to be set : if one is missing then the default value is used.
 
-  [b4825a53]: www.trainerroad.com "TrainerRoad"
+  [b4825a53]: http://www.trainerroad.com "TrainerRoad"
   [ba6fa317]: http://www.gribble.org/cycling/power_v_speed.html "The computational cyclist"
