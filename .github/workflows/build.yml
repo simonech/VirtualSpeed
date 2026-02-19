@@ -1,0 +1,40 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore VirtualSpeed/VirtualSpeed.sln
+    
+    - name: Build
+      run: dotnet build VirtualSpeed/VirtualSpeed.sln --no-restore --configuration Release
+    
+    - name: Test application runs
+      run: |
+        cd VirtualSpeed/VirtualSpeed
+        dotnet run --no-build --configuration Release -- powerData.tcx
+        if [ -f powerData_fixed.tcx ]; then
+          echo "✓ Application successfully generated output file"
+          ls -lh powerData_fixed.tcx
+        else
+          echo "✗ Application did not generate expected output file"
+          exit 1
+        fi
