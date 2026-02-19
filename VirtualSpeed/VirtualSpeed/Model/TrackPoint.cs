@@ -6,6 +6,6 @@ namespace VirtualSpeed.Model
         double Latitude,
         double Longitude,
         double ElevationMeters,
-        DateTime? Timestamp
+        DateTimeOffset? Timestamp
     );
 }

@@ -37,6 +37,8 @@ namespace VirtualSpeed.Services
                 var curr = pointList[i];
 
                 double stepDistance = HaversineDistance(prev, curr);
+                if (stepDistance <= 0)
+                    continue;
                 accumulatedDistance += stepDistance;
 
                 while (accumulatedDistance >= _segmentLengthMeters)

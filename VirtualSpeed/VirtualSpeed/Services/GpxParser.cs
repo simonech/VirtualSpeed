@@ -40,9 +40,9 @@ namespace VirtualSpeed.Services
                 if (eleNode != null)
                     elevation = double.Parse(eleNode.InnerText, CultureInfo.InvariantCulture);
 
-                DateTime? timestamp = null;
+                DateTimeOffset? timestamp = null;
                 var timeNode = node.SelectSingleNode("gpx:time", ns) ?? node.SelectSingleNode("time");
-                if (timeNode != null && DateTime.TryParse(timeNode.InnerText, null, DateTimeStyles.RoundtripKind, out var parsedTime))
+                if (timeNode != null && DateTimeOffset.TryParse(timeNode.InnerText, null, DateTimeStyles.RoundtripKind, out var parsedTime))
                     timestamp = parsedTime;
 
                 yield return new TrackPoint(lat, lon, elevation, timestamp);
