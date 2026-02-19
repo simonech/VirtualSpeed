@@ -67,11 +67,15 @@ namespace VirtualSpeed
             double avgSpeedKmh = totalTimeSeconds > 0
                 ? (totalDistance / totalTimeSeconds) * 3.6
                 : 0;
+            double avgPowerWatts = totalTimeSeconds > 0
+                ? rideSegments.Sum(r => r.PowerWatts * r.DurationSeconds) / totalTimeSeconds
+                : 0;
 
             Console.WriteLine($"Total Distance: {totalDistance:F0} m");
             Console.WriteLine($"Total Elevation Gain: {totalElevationGain:F0} m");
             Console.WriteLine($"Total Time: {TimeSpan.FromSeconds(totalTimeSeconds):hh\\:mm\\:ss}");
             Console.WriteLine($"Avg Speed: {avgSpeedKmh:F1} km/h");
+            Console.WriteLine($"Avg Power: {avgPowerWatts:F1} W");
             Console.WriteLine();
             Console.WriteLine("Segments:");
 
@@ -79,7 +83,7 @@ namespace VirtualSpeed
             {
                 var seg = ride.RouteSegment;
                 double gradientPct = seg.AverageGradient * 100;
-                Console.WriteLine($"{seg.StartDistanceMeters:F0}m - {seg.StartDistanceMeters + seg.LengthMeters:F0}m | Gradient: {gradientPct:F1}% | Speed: {ride.SpeedKmh:F1} km/h | Time: {ride.DurationSeconds:F0} s");
+                Console.WriteLine($"{seg.StartDistanceMeters:F0}m - {seg.StartDistanceMeters + seg.LengthMeters:F0}m | Gradient: {gradientPct:F1}% | Power: {ride.PowerWatts:F0} W | Speed: {ride.SpeedKmh:F1} km/h | Time: {ride.DurationSeconds:F0} s");
             }
         }
     }
