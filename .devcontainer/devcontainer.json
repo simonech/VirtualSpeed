@@ -1,0 +1,21 @@
+{
+  "name": "VirtualSpeed .NET Development",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "GitHub.copilot"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "VirtualSpeed/VirtualSpeed.sln"
+      }
+    }
+  },
+  "postCreateCommand": "dotnet restore VirtualSpeed/VirtualSpeed.sln",
+  "remoteUser": "vscode"
+}
