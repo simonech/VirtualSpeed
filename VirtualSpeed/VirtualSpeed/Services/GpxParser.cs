@@ -35,10 +35,10 @@ namespace VirtualSpeed.Services
                 double lat = double.Parse(latAttr, CultureInfo.InvariantCulture);
                 double lon = double.Parse(lonAttr, CultureInfo.InvariantCulture);
 
-                double elevation = 0;
                 var eleNode = node.SelectSingleNode("gpx:ele", ns) ?? node.SelectSingleNode("ele");
-                if (eleNode != null)
-                    elevation = double.Parse(eleNode.InnerText, CultureInfo.InvariantCulture);
+                if (eleNode == null)
+                    continue;
+                double elevation = double.Parse(eleNode.InnerText, CultureInfo.InvariantCulture);
 
                 DateTimeOffset? timestamp = null;
                 var timeNode = node.SelectSingleNode("gpx:time", ns) ?? node.SelectSingleNode("time");
