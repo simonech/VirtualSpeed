@@ -30,11 +30,11 @@ jobs:
     - name: Test application runs
       run: |
         cd VirtualSpeed/VirtualSpeed
-        dotnet run --no-build --configuration Release -- powerData.tcx
-        if [ -f powerData_fixed.tcx ]; then
-          echo "✓ Application successfully generated output file"
-          ls -lh powerData_fixed.tcx
+        output=$(dotnet run --no-build --configuration Release -- --gpx route.gpx)
+        echo "$output"
+        if echo "$output" | grep -q "Total Distance:"; then
+          echo "✓ Application produced expected output"
         else
-          echo "✗ Application did not generate expected output file"
+          echo "✗ Application did not produce expected output"
           exit 1
         fi
