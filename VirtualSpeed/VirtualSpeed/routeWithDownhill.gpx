@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1"
+     creator="ChatGPT Sample"
+     xmlns="http://www.topografix.com/GPX/1/1"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation="http://www.topografix.com/GPX/1/1
+                         http://www.topografix.com/GPX/1/1/gpx.xsd">
+
+  <metadata>
+    <name>Simple Test Route</name>
+  </metadata>
+
+  <trk>
+    <name>Test Track</name>
+    <trkseg>
+
+      <trkpt lat="50.8503" lon="4.3517">
+        <ele>50.0</ele>
+        <time>2026-02-18T10:00:00Z</time>
+      </trkpt>
+
+      <trkpt lat="50.8508" lon="4.3522">
+        <ele>52.0</ele>
+        <time>2026-02-18T10:01:00Z</time>
+      </trkpt>
+
+      <trkpt lat="50.8513" lon="4.3527">
+        <ele>55.0</ele>
+        <time>2026-02-18T10:02:00Z</time>
+      </trkpt>
+
+      <trkpt lat="50.8518" lon="4.3532">
+        <ele>53.0</ele>
+        <time>2026-02-18T10:03:00Z</time>
+      </trkpt>
+
+      <trkpt lat="50.8523" lon="4.3537">
+        <ele>56.0</ele>
+        <time>2026-02-18T10:04:00Z</time>
+      </trkpt>
+
+      <trkpt lat="50.8528" lon="4.3542">
+        <ele>54.0</ele>
+        <time>2026-02-18T10:05:00Z</time>
+      </trkpt>
+
+    </trkseg>
+  </trk>
+
+</gpx>
