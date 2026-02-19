@@ -19,9 +19,7 @@ namespace VirtualSpeed.Services
 
             foreach (var routeSegment in routeSegments)
             {
-                _parameters.ClimbGrade = routeSegment.AverageGradient * 100;
-
-                double speedKmh = calculator.CalculateVelocity(powerWatts);
+                double speedKmh = calculator.CalculateVelocity(powerWatts, routeSegment.AverageGradient);
                 double speedMs = calculator.ConvertKmhToMS(speedKmh);
                 double durationSeconds = speedMs > 0 ? routeSegment.LengthMeters / speedMs : 0;
 
