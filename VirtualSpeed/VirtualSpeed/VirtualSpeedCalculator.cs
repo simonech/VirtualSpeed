@@ -26,7 +26,12 @@ namespace VirtualSpeed
 
         public double CalculatePower(double velocityKmh)
         {
-            Forces forces = CalculateForces(velocityKmh);
+            return CalculatePower(velocityKmh, 0.0);
+        }
+
+        public double CalculatePower(double velocityKmh, double gradient)
+        {
+            Forces forces = CalculateForces(velocityKmh, gradient);
 
             double wheelPower = forces.Total * (velocityKmh * 1000.0 / 3600.0);
 
@@ -35,14 +40,14 @@ namespace VirtualSpeed
             return legPower;
         }
 
-        private Forces CalculateForces(double velocityKmh)
+        private Forces CalculateForces(double velocityKmh, double gradient)
         {
             var forces = new Forces();
             var velocityMS = ConvertKmhToMS(velocityKmh);
 
-            forces.Gravity = G * Parameters.WeightTotal * Math.Sin(Math.Atan(Parameters.ClimbGrade / 100));
+            forces.Gravity = G * Parameters.WeightTotal * Math.Sin(Math.Atan(gradient));
 
-            forces.Rolling = G * Parameters.WeightTotal * Math.Cos(Math.Atan(Parameters.ClimbGrade / 100)) * Parameters.Crr;
+            forces.Rolling = G * Parameters.WeightTotal * Math.Cos(Math.Atan(gradient)) * Parameters.Crr;
 
             forces.Drag = 0.5 * Parameters.GetCdA() * Parameters.Rho * velocityMS * velocityMS;
 
@@ -62,12 +67,17 @@ namespace VirtualSpeed
 
         public double CalculateVelocity(double power)
         {
+            return CalculateVelocity(power, 0.0);
+        }
+
+        public double CalculateVelocity(double power, double gradient)
+        {
             var epsilon = 0.000001;
             var lowervel = -1000.0;
             var uppervel = 1000.0;
             var midvel = 0.0;
 
-            var midpow = CalculatePower(midvel);
+            var midpow = CalculatePower(midvel, gradient);
 
             var itcount = 0;
             do
@@ -81,7 +91,7 @@ namespace VirtualSpeed
                     lowervel = midvel;
 
                 midvel = (uppervel + lowervel) / 2.0;
-                midpow = CalculatePower(midvel);
+                midpow = CalculatePower(midvel, gradient);
             } while (itcount++ < 100);
 
             return midvel;
@@ -95,7 +105,6 @@ namespace VirtualSpeed
             DriveTrainLoss = 3.0;
             WeightRider = 83;
             WeightBike = 8;
-            ClimbGrade = 0;
             Crr = 0.005;
             A = 0.509;
             Cd = 0.63;
@@ -106,8 +115,6 @@ namespace VirtualSpeed
         public double DriveTrainLoss { get; set; }
         public double WeightRider { get; set; }
         public double WeightBike { get; set; }
-
-        public double ClimbGrade { get; set; }
 
         public double Crr { get; set; }
 

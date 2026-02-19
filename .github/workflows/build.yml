@@ -30,9 +30,9 @@ jobs:
     - name: Test application runs
       run: |
         cd VirtualSpeed/VirtualSpeed
-        output=$(dotnet run --no-build --configuration Release -- --gpx routeWithDownhill.gpx)
+        output=$(dotnet run --no-build --configuration Release -- --gpx routeWithDownhill.gpx --power 200)
         echo "$output"
-        if echo "$output" | grep -q "Total Distance:"; then
+        if echo "$output" | grep -q "Total Distance:" && echo "$output" | grep -q "Avg Speed:"; then
           echo "✓ Application produced expected output"
         else
           echo "✗ Application did not produce expected output"
